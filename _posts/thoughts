@@ -1,0 +1,42 @@
+
+# How to test the algorithm works
+Try first to run the algorithm on very simple environments where not many episodes are needed for learning.
+If you have proved that your algorithm works their you can switch to more complicated ones.
+The ideal time for your evaluation should be less than 5 mintes and can be easily done on your local computer.
+The more complicated environments can then be trained on some cluster after you are sure that your algorithm is learning.
+
+
+
+If it doesn't work assume that there is a bug and investigate your algorithm carefully. This should be 
+your first step instead of starting to tune hyperparameters. Most probably you have implemented something
+incorrectly. Because even if you used wrong parameters at leas your algorihtm should learn. At least if you 
+chose your parameters in the range of the ones mentioned in the paper or reference implemention. Maybe not
+as fast as expected, but it should do something.
+
+Often the algorithm learns even if there is a bug. Thus, you need to test it on multiple environments.
+
+How you can be sure that you implemented it correctly? Is there a test suit to compare against? Is the only
+change to benchmark with existing papers or implementaions of libraries?
+
+# Monitoring of the learning process
+You can use tensorboard to have a nice visualisation of the progress of your network. What are some things
+that should be monitored?
+mean/std/min/max for cumulative rewards, episode lengths,
+and value function estimates, along with the losses for the objectives,
+ and the details of any exploration parameters (like mean entropy for stochastic policy optimization,
+  or current epsilon for epsilon-greedy as in DQN).
+
+Als looking at the video of the current performance of the agent helps to understand what it learnt so far.
+
+# What to do if you think you developed a new algorithm
+Train your algorihtm with different seeds and check that it is stable with multiple seeds
+and not only by luck is goodd. Remove the stochasticity from the algorithm
+
+Compare it to the baseline in the domain you want to solve. 
+
+If you created a new domain then think about which algorithm could be used here to compare against.
+Spend the same time to optimize the baseline then to optimize your algorithm and make the comparison
+fair.
+
+# Dont just randomly try different hyperparameters. Have a clear expectation what you want to achieve with this changes
+and then validate them
