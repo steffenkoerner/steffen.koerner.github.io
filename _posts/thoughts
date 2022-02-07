@@ -40,3 +40,27 @@ fair.
 
 # Dont just randomly try different hyperparameters. Have a clear expectation what you want to achieve with this changes
 and then validate them
+
+# Describe the autograd function of pytorch
+The computational graph with some examples
+Math could link to the video from 3BrownEyes
+
+# pytorch
+
+# Tensors
+The first thing you come into contact when starting pytorch. At first
+they look quite similar to numpy data structures. So why does pytorch
+uses tensors.
+Machine Learning in python is mainly done with numpy as it speeds 
+up the matrix calculation as parts are implemented in C
+t
+A replacement for NumPy to use the power of GPUs and other accelerators.
+An automatic differentiation library that is useful to implement neural networks.
+
+tensors could be moved to gpu
+
+## Computation Graph
+We need to calculate gradients w.r.t. the weights and biases of the network. 
+Then we update our parameter via gradient descent
+
+# Autograd
