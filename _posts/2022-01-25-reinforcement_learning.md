@@ -5,7 +5,7 @@ date:   2022-01-28 Reinforcement Learning
 categories: Reinforcement Learning
 ---
 
-#### ---------------------- DRAFT ----------------------------- 
+# <span style="color: red;">---------------------- DRAFT ----------------------------- </span>
 Reinforcement Learning (RL) is a subfield of machine learning and focuses on learning by trial and error. This is very amazing. Just imagine a chess engine that learns to play chess on it's own, without any expert knowledge (except the allowed moves of the single pieces). The chess engine just plays a game and in the end receives a reward (+1 for winning, 0 for draw and -1 for losing). Only by this feedback the engine is able to learn to play chess extremely good. Isn't that amazing.
 
 Reinforcement learning gets a lot of popularity since 2016 when the strongest Go Player of the world Lee Sedol was beaten by AlphaGo in the game Go. AlphaGo is an algorithm that was developed by Google Deepmind. This was a huge milestone as Go was not expected to be beaten by an algorithm in the near feature. This assumption was based on the fact that the game has a very huge amount of possible states. 
@@ -16,7 +16,7 @@ Reinforcement learning gets a lot of popularity since 2016 when the strongest Go
 - Learning Atari Games
 
 ### Key concepts
-The agent is in a state s<sub>t</sub> and interacts with the environment by executing action a<sub>t</sub>. By this interaction the environment changes into a new state s<sub>t+1</sub>. At the same time the agent receives a reward r<sub>t</sub> that contains information on how good this action was. This feedback is used by the agent to learn which action is good in which state. The agent choses it's actions to maximize the rewards he can collect.
+The agent is in a state s<sub>t</sub> and interacts with the environment by executing action a<sub>t</sub>. By this interaction the environment changes into a new state s<sub>t+1</sub>. At the same time the agent receives a reward r<sub>t+1</sub> that contains information on how good this action was. This feedback is used by the agent to learn which action is good in which state. The agent choses it's actions to maximize the rewards he can collect.
 
 Let's have first a look at the terminology and afterwards at a concrete example.
 
@@ -52,24 +52,30 @@ The reward is what the agent gets from the environment after he executes action 
 state s<sub>t+1</sub>. This means that the reward r can be seen as a function $$R : S x A x S ->\mathbb{R} $$.
 
 The goal of the agent is to maximize the cumulative rewards during some trajectory $$\tau$$. A trajectory is simply a sequence of states and
-actions. $$\tau = (s_t, a_t,s_{t+1},a_{t+1},...)$$. The cummulative reward is called return. This means the agent want to maximize the return until the final time stamp T.
+actions. $$\tau = (s_t, a_t,s_{t+1},a_{t+1},...)$$. The cummulative reward is called return G. This means the agent want to maximize the return until the final time stamp T.
 
-$$R(\tau) = \sum_{t=0}^T r_{t}$$
-
-
+$$G(\tau) = \sum_{t=0}^T r_{t}$$
 
 How is this final time step defined? In games the final time step is obviously the winning/draw/losing state. Here the trajectory $$\tau$$ has a defined length and is called an episode. The task is called episodic.
 
 But this is very different for other tasks that are continuing over a long period of time. This is e.g. the case in controling the heat of a room. The trajectory is infinite and we call it an continuing task.
 
-In a continuing task ($$T = \infty $$), the return is not converging to an finite value. To prevent this we add a discount factor $$\gamma\in(0,1)$$. This factor gurantees a convergence. 
+In a continuing task ($$T = \infty $$), the return is not converging to an finite value. To prevent this we add a discount factor $$\gamma\in[0,1]$$. This factor gurantees a convergence. 
 
-$$R(\tau) = \sum_{t=0}^{\infty} \gamma^{t} r_{t}$$
+$$G(\tau) = \sum_{t=0}^{\infty} \gamma^{t} r_{t}$$
 
 The disount factor is also useful for episodic tasks as it encodes that a reward now is more worth than in the future. This forces the agent to achieve its goal as fast as possible and that's what we want. We will look on the influence on the behaviour of an agent for different reward functions at the end of the page.
 
 # Policy
+The policy $$\pi$$ is the brain of the agent and selects the action it should take in each state. It is a mapping from states to a probability distribution over the actions.  
 
+$$a_{t} \sim \pi(s_{t})$$
+
+The policy is called deterministic if in each state one action has probability 1 and thus the others have 0. Intuitevely, this means that
+you exactly know which action a the agent picks in state s.
+
+Otherwise the policy is called stochastic. In this case you don't know exactly which action is picked. You just now the probability
+distributioin. An example for state $$s_{1}$$ could be $$\pi(a_{1}|s_{1})= 0.3$$,  $$\pi(a_{2}|s_{1})= 0.5$$ and  $$\pi(a_{3}|s_{1})= 0.2$$.
 
 ## Markov Decision Process
 This actually sounds like a Markov Decision Process and we know how to solve this. What is then the problem? The problem is that we don't know
