@@ -52,9 +52,9 @@ The reward is what the agent gets from the environment after he executes action 
 state s<sub>t+1</sub>. This means that the reward r can be seen as a function $$R : S x A x S ->\mathbb{R} $$.
 
 The goal of the agent is to maximize the cumulative rewards during some trajectory $$\tau$$. A trajectory is simply a sequence of states and
-actions. $$\tau = (s_t, a_t,s_{t+1},a_{t+1},...)$$. The cummulative reward is called return G. This means the agent want to maximize the return until the final time stamp T.
+actions. $$\tau = (s_t, a_t,s_{t+1},a_{t+1},...)$$. The cummulative reward is called return R. This means the agent want to maximize the return until the final time stamp T.
 
-$$G(\tau) = \sum_{t=0}^T r_{t}$$
+$$R(\tau) = \sum_{t=0}^T r_{t}$$
 
 How is this final time step defined? In games the final time step is obviously the winning/draw/losing state. Here the trajectory $$\tau$$ has a defined length and is called an episode. The task is called episodic.
 
@@ -62,25 +62,41 @@ But this is very different for other tasks that are continuing over a long perio
 
 In a continuing task ($$T = \infty $$), the return is not converging to an finite value. To prevent this we add a discount factor $$\gamma\in[0,1]$$. This factor gurantees a convergence. 
 
-$$G(\tau) = \sum_{t=0}^{\infty} \gamma^{t} r_{t}$$
+$$R(\tau) = \sum_{t=0}^{\infty} \gamma^{t} r_{t}$$
 
 The disount factor is also useful for episodic tasks as it encodes that a reward now is more worth than in the future. This forces the agent to achieve its goal as fast as possible and that's what we want. We will look on the influence on the behaviour of an agent for different reward functions at the end of the page.
 
 # Policy
-The policy $$\pi$$ is the brain of the agent and selects the action it should take in each state. It is a mapping from states to a probability distribution over the actions.  
+The policy $$\pi$$ is the brain of the agent and selects the action it should take in each state. It is a mapping from states to a probability distribution over the actions. The goal of reinforcement learning is to find an optimal policy $$\pi^*$$.
 
 $$a_{t} \sim \pi(s_{t})$$
 
-The policy is called deterministic if in each state one action has probability 1 and thus the others have 0. Intuitevely, this means that
+The policy is called deterministic if in each state one action has probability 1 and thus the others have 0. Intuitevly, this means that
 you exactly know which action a the agent picks in state s.
 
 Otherwise the policy is called stochastic. In this case you don't know exactly which action is picked. You just now the probability
-distributioin. An example for state $$s_{1}$$ could be $$\pi(a_{1}|s_{1})= 0.3$$,  $$\pi(a_{2}|s_{1})= 0.5$$ and  $$\pi(a_{3}|s_{1})= 0.2$$.
+distributioin. An example for state $$s_{1}$$ could be $$\pi(a_{1}|s_{1})= 0.3$$,  $$\pi(a_{2}|s_{1})= 0.5$$ and  $$\pi(a_{3}|s_{1})= 0.2$$. Where
+$$\pi(a_{1}|s_{1})$$ means the probability of selecting action $$a_1$$ in state $$s_1$$.
 
-## Markov Decision Process
-This actually sounds like a Markov Decision Process and we know how to solve this. What is then the problem? The problem is that we don't know
-anything about the transitisons. The agent needs to disover the dynamics of the environment by trial and error. Trial and error means do try
-different actions in different states and see which rewards he gets.
+## The goal of reinforcement learning
+In the beginning we said that the goal of the agent in reinforcement learning is to maximize the expected return $$J$$. Let's define this in a more formal way.
+
+
+$$J(\pi) = \mathbb{E}_{\tau \sim \pi}[R(\tau)] =\sum_{\tau} P(\tau|\pi)R(\tau)$$ 
+
+$$P(\tau|\pi)$$ describes how probable it is to see the trajectory $$T$$ under the policy $$\pi$$. Thus, we weight the reward of each
+trajectory by the probability of seeing it.
+
+
+## Markov Decision Process (MDP)
+All the concepts described above most probably already sound familiar to you. That's because it's describing a Markov Decision Process. You
+can have a look at it in e.g. [wikipedia](https://en.wikipedia.org/wiki/Markov_decision_process).
+
+But if reinforcement learning can be modelled as a MDP, what is then the problem? Can't we just solve it with dynamic programming as usual? The problem is that we don't know the dynamics environment and thus can't easily solve it. This means that the agent does not a priori knowswhat happens if he executes an action in a state.
+
+
+The agent needs to disover the dynamics of the environment by trial and error. Trial and error means do execute different actions in different states and see which rewards he gets.
+
 
 
 ## Example
@@ -107,13 +123,6 @@ Reward: The reward defines the goal of reinforcement learning. In every time ste
 
 
 
-
-# Example
-
-**Value Function**:
-The value functions contains for every state the expected long term reward an agent can achieve starting in this state. It is an accumulation of the rewards of possible future states. It can be used to evaluate the goodness/badness of states. In contrast to that, the reward only tells how good an immediate action is. An action with a low reward can end up in a state that has a high value or vice versa.
-
-# The mathematical interpretation
 
 
 
