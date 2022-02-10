@@ -18,6 +18,10 @@ Reinforcement learning gets a lot of popularity since 2016 when the strongest Go
 ### Key concepts
 The agent is in a state s<sub>t</sub> and interacts with the environment by executing action a<sub>t</sub>. By this interaction the environment changes into a new state s<sub>t+1</sub>. At the same time the agent receives a reward r<sub>t+1</sub> that contains information on how good this action was. This feedback is used by the agent to learn which action is good in which state. The agent choses it's actions to maximize the rewards he can collect.
 
+![Reinforcement Learning Basics](https://steffenkoerner.github.io/images/reinforcement_learning.png)
+
+![Reinforcement Learning Basics]("images/reinforcement_learning.png")
+
 Let's have first a look at the terminology and afterwards at a concrete example.
 
 # Agent
@@ -104,7 +108,7 @@ This example illustrates the concepts above. We will not discuss how the agent l
 will be on getting an visual understanding of the reinforcement learning problem statement.
 
 Imagine we have a 4x4 grid world and the goal of the agent is to find the star. See in the image below.
-This enviornment has 16 states.The start position of the agent is (0,0) and the goal state is (4,4). The task is episodic, which means that if the agent reaches the goal state the episode terminates. Now everything is resetted and the agents starts again.
+This enviornment has 16 states.The start position of the agent is (0,0) and the goal state is (3,3). The task is episodic, which means that if the agent reaches the goal state the episode terminates. Now everything is resetted and the agents starts again.
 We define that the agent has 4 different actions (up, down, left or right). This means that if the agent
 executes action up in state (0,0) he will end up in state (1,0). If he evaluates an action that he can't do as there is a border, he will
 stay in the same state. This means that action left in state(1,0) will lead to state(1,0).
@@ -116,12 +120,27 @@ a reward of +1, while all other rewards are 0.
 
 Finally we have everything ready to start with reinforcement learning. Let's dive into this interesting part.
 
+In the beginning the agent doesn't know anything about the environment and it's actually goal is. The only thing he can do is to make 
+random actions. Thus, he goes left, right, up, up, down,.... As the agent is always getting a reward of 0 he can't learn anything.
+This goes on until the agent reaches the star. He receives a reward of +1, which we have specified for reaching this state.
+
+This is the first time the agent gets valuable feedback. Assuming he reached the goal state from state (3,2) with action right he now knows
+that this action was a good one to make. But maybe there is even a better action to make. To learn more about the environment the agent now
+starts again from state (0,0). 
+
+This goes on for a while and the agent understands more and more which action in which state is good. In other words, the policy of the agents
+improves, which leads to a higher expected return. 
+
+After a while the agent has a good policy and knows how to reach the goal state. The action knows which action to chose in which state.
+But he never knows if there is a better action to chose in a state. This is called the exploration vs. exploitation dilemma. A paper about this can be found here: [Exploration vs. Exploitation](https://arxiv.org/abs/1812.01552)
+
+An illustrative example of this problem would be that you are new in a town and want to find a good pizzeria. At the beginning you will try
+a few and then decide on a favorite on, which you like more than the others. But maybe there is even a better one in the town. But you don't
+know. Thus, each time you want to go for a pizza you either exploit your knowledge where you find a good pizza and you go to your favorite one.
+Or you try to find a better one and thus you go to a new one (exploration).
 
 
-
-
-
-# Influence of the reward on the behaviour of the agent
+#### Influence of the reward on the behaviour of the agent
 The chosen reward function is very important and often not so easy as in this toy example. Let's see how it influences the behaviour of the agent.
 
 The most easies reward function for the grid world is to give the robot +1 if he reaches the goal state and 0 in all other cases. The robot learns to reach the goal. Is it the fastest way he learns? No, he doesn't. There is no difference in reward for the agent if he reaches the goal after timestep t1 or tx. Normally, future rewards are discounted by gamma as shown abvoe. This
