@@ -18,9 +18,7 @@ Reinforcement learning gets a lot of popularity since 2016 when the strongest Go
 ### Key concepts
 The agent is in a state s<sub>t</sub> and interacts with the environment by executing action a<sub>t</sub>. By this interaction the environment changes into a new state s<sub>t+1</sub>. At the same time the agent receives a reward r<sub>t+1</sub> that contains information on how good this action was. This feedback is used by the agent to learn which action is good in which state. The agent choses it's actions to maximize the rewards he can collect.
 
-![Reinforcement Learning Basics](https://steffenkoerner.github.io/images/reinforcement_learning.png)
-
-![Reinforcement Learning Basics]("images/reinforcement_learning.png")
+![Reinforcement Learning Basics](/images/reinforcement_learning.png)
 
 Let's have first a look at the terminology and afterwards at a concrete example.
 
@@ -112,6 +110,10 @@ This enviornment has 16 states.The start position of the agent is (0,0) and the 
 We define that the agent has 4 different actions (up, down, left or right). This means that if the agent
 executes action up in state (0,0) he will end up in state (1,0). If he evaluates an action that he can't do as there is a border, he will
 stay in the same state. This means that action left in state(1,0) will lead to state(1,0).
+
+
+![Grid World Setup](/images/grid_world_setup.png)
+
 
 In the preceding paragraph we have described the action and state space. One important thing is missing. We need to define a reward function
 such that the agent quickly moves to the goal position (star).
