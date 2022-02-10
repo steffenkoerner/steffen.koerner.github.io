@@ -78,7 +78,7 @@ Otherwise the policy is called stochastic. In this case you don't know exactly w
 distributioin. An example for state $$s_{1}$$ could be $$\pi(a_{1}|s_{1})= 0.3$$,  $$\pi(a_{2}|s_{1})= 0.5$$ and  $$\pi(a_{3}|s_{1})= 0.2$$. Where
 $$\pi(a_{1}|s_{1})$$ means the probability of selecting action $$a_1$$ in state $$s_1$$.
 
-## The goal of reinforcement learning
+## The Goal of Reinforcement Learning
 In the beginning we said that the goal of the agent in reinforcement learning is to maximize the expected return $$J$$. Let's define this in a more formal way.
 
 
@@ -100,43 +100,26 @@ The agent needs to disover the dynamics of the environment by trial and error. T
 
 
 ## Example
+This example illustrates the concepts above. We will not discuss how the agent learns. That will be part of a new post. The main focus
+will be on getting an visual understanding of the reinforcement learning problem statement.
+
 Imagine we have a 4x4 grid world and the goal of the agent is to find the star. See in the image below.
-This enviornment has 16 states and we assume that the agent has 4 different actions (move up, move down, move left and move right). We model the reward tp
+This enviornment has 16 states.The start position of the agent is (0,0) and the goal state is (4,4). The task is episodic, which means that if the agent reaches the goal state the episode terminates. Now everything is resetted and the agents starts again.
+We define that the agent has 4 different actions (up, down, left or right). This means that if the agent
+executes action up in state (0,0) he will end up in state (1,0). If he evaluates an action that he can't do as there is a border, he will
+stay in the same state. This means that action left in state(1,0) will lead to state(1,0).
 
-In this example we create a environment that is a 4x4 grid world. Each square is a state that sums up to 16 unique states.
-Each square
+In the preceding paragraph we have described the action and state space. One important thing is missing. We need to define a reward function
+such that the agent quickly moves to the goal position (star).
+Let's keep it simple and say that we use a discounted reward function with $$\gamma = 0.9$$ and that reaching the goal state gives
+a reward of +1, while all other rewards are 0.
 
- Thus, we have 16 different states our agent can be in which consists of 16 separate fields. In this example these are the states the agent can
-be in. 
-
-
-
-
- and a reward rt is given to the agent. The agent now executes another action at+1 and so on. The goal of the agent is accumulate as much rewards as possible.
-
-The two main concepts are agent and environment. The agent is 
-
-Agent: The agent (e.g. a algorithm, robot) that interacts with the environment
-Environment: The surrounding the agent interacts with
-Policy: The policy is what in the reinforcement learning process should be attained. It defines the behaviour of an agent in a given state.
-Reward: The reward defines the goal of reinforcement learning. In every time step the agent receives a single number from the environment, called the reward. It is an important feedback to the agent on how good the action was. The goal of the agent is to maximize the expected reward.
+Finally we have everything ready to start with reinforcement learning. Let's dive into this interesting part.
 
 
 
 
 
-
-Imagine the agent being a robot that is in a room, which is represented as a grid. The goal is to reach the top right corner. Let's assume that the robot has 4 different actions in each step.
-He can go left, right, front or back by one step.
-
-
-
-$$mean = \frac{\displaystyle\sum_{i=1}^{n} x_{i}}{n}$$
-
-
-Environment: The environment describes the state the agent is in.
-
-Value Function: The value functions contains for every state the expected long term reward an agent can achieve starting in this state. It is an accumulation of the rewards of possible future states. It can be used to evaluate the goodness/badness of states. In contrast to that, the reward only tells how good an immediate action is. An action with a low reward can end up in a state that has a high value or vice versa.
 
 # Influence of the reward on the behaviour of the agent
 The chosen reward function is very important and often not so easy as in this toy example. Let's see how it influences the behaviour of the agent.
