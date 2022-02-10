@@ -18,7 +18,7 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: Machine Learning by Steffen Koerner
+title: Steffen's Blog
 #email: annonymous@example.com
 description: >- # this means to ignore newlines until "baseurl:"
   My current research on Reinforcement Learning.
