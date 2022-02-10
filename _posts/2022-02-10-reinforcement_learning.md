@@ -48,7 +48,7 @@ In contrast to that, continuous action spaces have an infinite amount of possibl
 The reward is a very important part of reinforcement learning. This actually tells the agent which behaviour is good (high reward) or which is bad (low reward). Thus, it defines what behaviour the agent learns at the end. We will look at some examples of how the reward influences the behaviour of the agent in a later section.
 
 The reward is what the agent gets from the environment after he executes an action a<sub>t</sub> in state s<sub>t</sub> and ends up in a new
-state s<sub>t+1</sub>. This means that the reward r can be seen as a function $$R : S x A x S ->\mathbb{R} $$.
+state s<sub>t+1</sub>. This means that the reward r can be seen as a function $$R : S \times A \times S \to \mathbb{R} $$.
 
 The goal of the agent is to maximize the cumulative rewards during some trajectory $$\tau$$. A trajectory is simply a sequence of states and
 actions. $$\tau = (s_t, a_t,s_{t+1},a_{t+1},...)$$. The cumulative reward is called return R. This means the agent wants to maximize the return until the final time stamp T.
