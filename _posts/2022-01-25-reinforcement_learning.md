@@ -6,9 +6,13 @@ categories: Reinforcement Learning
 ---
 
 # <span style="color: red;">---------------------- DRAFT ----------------------------- </span>
+This post gives an introduction to reinforcement learning (RL). It describes all components that are part of it and how they are connected.
+After reading this post it should be clear which problem reinforcement learining is trying to solve.
+
 Reinforcement Learning (RL) is a subfield of machine learning and focuses on learning by trial and error. This is very amazing. Just imagine a chess engine that learns to play chess on it's own, without any expert knowledge (except the allowed moves of the single pieces). The chess engine just plays a game and in the end receives a reward (+1 for winning, 0 for draw and -1 for losing). Only by this feedback the engine is able to learn to play chess extremely good. Isn't that amazing.
 
 Reinforcement learning gets a lot of popularity since 2016 when the strongest Go Player of the world Lee Sedol was beaten by AlphaGo in the game Go. AlphaGo is an algorithm that was developed by Google Deepmind. This was a huge milestone as Go was not expected to be beaten by an algorithm in the near feature. This assumption was based on the fact that the game has a very huge amount of possible states. 
+
 
 # Problems that have been solved by reinforcement learning
 - LearningChess
@@ -154,3 +158,12 @@ agent would try to go to the goal as fast as possible.
 What would happen if we set the reward for each timestep to an value >0 and the reward for the goal state to +1. What strategy would he learn? Actually, in this case the agent would learn
 to never reach the goal state. That's because he gets a positive reward for each step. If the agent reaches the goal state this reward would stop as the episode is finished. Thus, he tries
 to avoid it.
+
+# Summary
+As you seen above, the only thing to make a agent learn what you want is to specify a reward function. Just think about it again. 
+You just need to specify a reward function. Okay, this is a bit simplistic as  finding a good one can still be complex.
+
+But you don't need to come up with very domain specific algorithms that are hardcoded into the agent. For the simple case as seen above,
+it would be easy to implement an algorithm. But imagine a more complex environment like for example  autonomous driving. Here exist so many different scenarios that it is infeasible to specify a action for each state. The same is true for the games Chess and Go.
+
+In these use cases reinforcement learning is a perfect solution and achieves excellent results as can be seen in Go.
