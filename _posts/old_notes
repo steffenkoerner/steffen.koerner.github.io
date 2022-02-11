@@ -1,0 +1,292 @@
+!!!! NOT READY....WORK IN PROGRESS !!!
+
+## Chapter 1: The Reinforcement Learning Problem
+
+### Learning Goals
+- Understanding Reinforcement Learning and how it is different to Supervised and Unsupervised Learning
+- Policy, Reward, Value Function, Model of the Environment
+- Exploration vs. Exploitation
+- Model-based and model-free Reinforcement Learning
+
+### Summary
+Reinforcement Learning (RL) can be seen as Learning by experiences. An agent learns by interacting with the environment. It is a goal-directed learning approach. The goal is to maximize the expected long term reward. The outcome of RL is a policy that defines the behaviour of the agent for every state. This means for every state it searches for the optimal actions that lead to the highest accumulated reward.
+
+**Example** <br>
+There are two slot machines ([Definition slot machine](https://en.wikipedia.org/wiki/Slot_machine)) and you have now information about the expected money you can win with any of the two machines. By pulling on one of the arms you gain more information about that machine and you can learn the expectation of each slot machine and you find out which one is the better one.
+
+Beyond the agent and the environment, there are four important elements in reinforcement learning. The following description is an informal description as important fundamentals that are needed ared not defined until Chapter 3.
+
+- **Policy**:
+The policy is what in the reinforcement learning process should be attained. It defines the behaviour of an agent in a given state. The policy can be stochastic, this means that for example with probability &alpha; it takes action a<sub>1</sub> and with probability 1-&alpha; it takes action a<sub>2</sub>.
+- **Reward**:
+The reward defines the goal of reinforcement learning. In every time step the agent receives a single number from the environment, called the reward. It is an important feedback to the agent on how good the action was. The goal of the agent is to maximize the expected long term reward. 
+- **Value Function**:
+The value functions contains for every state the expected long term reward an agent can achieve starting in this state. It is an accumulation of the rewards of possible future states. It can be used to evaluate the goodness/badness of states. In contrast to that, the reward only tells how good an immediate action is. An action with a low reward can end up in a state that has a high value or vice versa.
+- **(Optional) Model of the environment**:
+A model predicts what the environment will do next. It can contain information about the next state and the next reward. For example it contains information about which state S<sub>t+1</sub> the agent lands in if it takes action a<sub>1</sub> in S<sub>t</sub>.
+
+**Exploration vs. Exploitation** <br>
+In RL there is a tradeoff between exploration and exploitation. That means in general a decision between trying new actions in a state and using an action that is alreday known as being good. Informally, this can be seen as finding a good pizza restaurant. You can exploit your knowledge if you go to a pizzeria where you already ate a pizza that you liked. Or you can try a new pizzeria where you have never been before. By doing this sometimes the pizza is worse, but sometimes the pizza is much better and you select that one as your new favourite pizza. Thus, exploration is neccessary to find the best pizza.
+
+
+**Model-based and Model-free reinforcement learning** <br>
+In RL a model-based approach learns an explicit model of the environment. This model is then used to derive a policy. In contrast to that model-free learning does not learn a model. It learns through trial and error learning which policy is good.
+
+
+### Additional Information
+
+
+
+## Chapter 2: Multi-arm Bandits
+### Learning Goals
+### Summary
+### Additional Information
+
+
+## Chapter 3: Finite Markov Decision Processes
+### Learning Goals
+- Agent-Environment Interface
+- Episodic and Continuing Tasks
+- Understanding Markov Decision Processes (MDPs)
+- Return
+- Discounting factor &gamma;
+- Value Functions 
+- Bellman Equations and Bellmann Optimal Equations
+
+
+
+### Summary
+
+The learner and decision maker in reinforcement learning is called the agent. Everything outside the agent is called the environment. The agent and the environment interact with each other. In every time step t the agent is in state S<sub>t</sub> and takes action a<sub>t</sub>. It then receives from the environment the new state S<sub>t+1</sub> an the reward R<sub>t+1</sub>.
+
+![Image](https://github.com/steffenkoerner/ReinforcementLearning/blob/master/Agent_Environment.PNG)
+
+
+**Markov Property** <br>
+In reinforcement learning the decision are made based on the state of the environment called the environment's state. If the decision in a state only depends on that state and ignoring the predecessor states, then the state has the Markov Property. This means that the state sums up all the prior information in a compact way. This property is very important as it makes it possible to determine the next state S<sub>t+1</sub> solely based on the State<sub>t</sub> and the taken action A<sub>t</sub>. Furthermore, it concludes that many real world problems are not perfectly fit the Markov Property, but that an approximation is still enough to make good decisions.
+
+**Markov Decision Process** <br>
+A reinforcement task is based on a Markov Decision Process (MDP). A MDP is defined by a tuple (S,A,T,R, &gamma;).
+- **S** is a set of states
+- **A** is a set of actions
+- **T(s',s) = P(S**<sub>t+1</sub> **= s' | S<sub>t</sub> = s , at = a)** is the transition probability of landing in state s' after taking action a in state s
+- **R(s',s,a)** is the immediate reward for taking action a in state s and landing in state s'  
+- &gamma; &#8714; [0,1] is the discount factor, which states how immediate rewards is weighted in contrast to rewards in future time steps. If it is 1 then all rewards are handled equally
+
+After introducing the MDP some terms informally explained in Chapter 1 can be expressed more formally.
+
+**Policy** <br>
+A policy is a mapping from state to an action. Therefore, it defines which action are taken in each state. The policy can be stochastic. This means that each action in a state can has a probability between [0,1] as long as the sum of all is equal to 1.
+
+**Model of the environment** <br>
+The model of the environment is optional in reinforcement learning. It is defined by R and T.
+ 
+**Value Function** <br>
+Nearly all reinforcement learning algorithms are based on estimation a value function. A value function assigns a number to each state representing how much future rewards are expected from this state. This future rewards are obviously based on the action taken in future states. Therefore, the value function is defined in respect to a policy &pi;. The value of state s can be viewed as the sum of rewards that are collected if one is following the policy &pi; and starting in s.
+
+A very important property of value functions is that they satisfy some particular recursive realtionships, called the Bellmann equations. The value v<sub>&pi;</sub> is the unique solution to it's Bellmann equations. It is very important to understand them as they build the basis for many algorithms to calculate the solution of v<sub>&pi;</sub>. <br>
+The meaning behind the equations is actually quite easy to understand. .....TODO!!!
+![Image](https://github.com/steffenkoerner/ReinforcementLearning/blob/master/Bellmann.PNG)
+
+**Optimal Value Functions** <br>
+The goal of reinforcement learning is to find a policy that maximises the expected return. Therefore, we need some method to compare multiple policies to each other. A policy &pi; is better than &pi;' if and only if v<sub>&pi;</sub>(s) 	&ge; v<sub>&pi;'</sub>(s) for all s 	&isin; S. There is always at least one policy that is better or equal to all other policies. This is called an optimal policy and denoted as &pi;<sub>*</sub>. While there could be multiple optimal policies there can only be one optimal value function called the optimal state value function v<sub>*</sub>. As the optimal value function is a value function it has to satisfy the Bellmann equations. For v<sub>*</sub> the  Bellmann equations can be written in a different form called the Bellmann optimality equation. The only change to the Bellmann equation is that the summation over all the action is replaced by a max over all action. This makes sense, as the optimal value of a state should be equal to the expected return of the best action in that state.
+![Image](https://github.com/steffenkoerner/ReinforcementLearning/blob/master/BellmannOptimality.PNG)
+
+
+**Episodic and Continuing Tasks** <br>
+An episode ends in a terminal state and then starts with a new episode. A episodic task therefore consists of episodes. A typical example is a chess game. Each game is called an episode. In contrast to that a continuing task can not easily divided into episodes. An example is a continuing control task like regulating the temperature in a room. 
+
+
+**Return** <br>
+The long term reward which we want to maximize is called the return. This means starting at a timestep t the expected return G<sub>t</sub> is the discounted sum of all following rewards. G<sub>t</sub> = R<sub>t+1</sub> + &gamma; R<sub>t+2</sub> + ... + &gamma;<sup>T-1</sup> R<sub>T</sub>, where T is the end of the episode and &gamma; , 0 &le; &gamma; &ge; 1 , is the discount rate.
+ 
+ **Discounting factor &gamma;** <br>
+ Why do we need discounting? Discounting is needed that the return of a continous tasks converges. Without a discounting factor and T -> &infinity; the return could go to &infinity;. A policy &pi;<sub>1</sub> that get a reward of +1 in every time step and a policy &pi;<sub>2</sub> that get a reward of +5 in every time step would have a equal return of &infinity;. Thus &gamma; is used to make the series converge. With discounting the two policies have a return of 1*(1- &gamma;<sup>n</sup>)/(1-y) and 5*(1- &gamma;<sup>n</sup>)/(1-y). Thus, makes it even with infinite horizon possible to rank multiple policies.
+
+### Additional Information
+
+
+## Chapter 4: Dynamic Programming
+### Learning Goals
+- Policy Evaluation
+- Policy Improvement
+- Policy Iteration
+- Value Iteration
+- Generalized Policy Iteration
+- Limitations
+
+### Summary
+A set of algorithms that can be used to calculate an optimal policy for an Markov Decision Process (MDP) is called dynamic programming (DP). In classical reinforcement learning there is no perfect model of the environment and there are so many states that DP is not very useful. Nevertheless, they convey very important concepts. Starting from this chapter we assume that the environment is a finite MDP, which means that S, A, and R are finite and T is given. Dynamic programming and reinforcement are using value functions to guide the search for good policies.
+
+**Policy Evaluation** <br>
+Calculating the sate-value function v<sub>&pi;</sub> for an arbitrary policy is called policy evaluation.
+
+**Policy Improvement** <br>
+Policy improvement is the process of creatinng a new policy &pi;' that improves an original policy &pi; by making it greedy with respect to the value function of &pi;. It follows that &pi;'(s) &ge; &pi;(s) , &forall; s 	&isin; S.
+
+**Policy Iteration** <br>
+The policy iteration algorithm alternates between policy evaluation and policy improvement. This means that starting with a policy &pi;<sub>0</sub> it creates the corresponding state-value function v<sub>&pi;<sub>0</sub></sub> using polic evaluation. This state value function is then used to improve the policy to &pi;<sub>1</sub> using policy improvement. As finite MDP consists only of a finite number of policies the iteration process converges to an optimal policy &pi;<sub>&#42;</sub>.
+
+&pi;<sub>0</sub> -E-> v<sub>&pi;<sub>0</sub></sub> -I-> &pi;<sub>1</sub> -E-> v<sub>&pi;<sub>1</sub></sub> -I-> ... -I-> &pi;<sub>&#42;</sub> -E-> v<sub>&pi;<sub>&#42;</sub></sub>,
+
+where -E-> denotes a policy evaluation and -I-> a policy improvement. The algorithm terminates if the new policy is equal to the old one. Often policy iteartion converges in just a few iterations. 
+
+
+**Value Iteration** <br>
+Value iteration is a special case of policy iteration. It improves the policy evaluation step by only taking one step instead of fully iterating through the state set.
+It takes in general more iterations than in policy iteration. That's because often the policy is already fixed while the state value function still changes.
+
+
+**Generalized Policy Iteration** <br>
+
+
+
+### Additional Information
+
+## Chapter 5: Monte Carlo Methods
+### Learning Goals
+- Off Policy and On Policy Monte Carlo methods
+- &epsilon; - Greedy
+- Importance Sampling (Ordinary/Weighted Importance Sampling)
+
+### Summary
+In contrast to dynamic programming (DP) Monte Carlo Methods do not need a model of the environment. Furthermore they do not bootstrapping. 
+
+**Problem** <br>
+THe Monter Carlo methods only learn from the tails of episodes, which has multiple problems. If the following actions are not greedy learning is slowed done, especiall for states that appear very early in long episodes. In this case Temporal Difference learning can be helpful, which is introduced in Chapter 6.
+
+### Additional Information
+
+## Chapter 6: Temporal Difference Learning
+### Learning Goals
+- Understand Temporal Difference Learning and differences to Monte Carlo and dynamic progrmming
+- SARSA Learning
+- Q-Learning
+- Double Q-Learning
+
+### Summary
+
+**Understand Temporal Difference Learning and differences to Monte Carlo and dynamic progrmming** <br>
+Temporal Difference Learning (TD) is one of the central ideas of reinforcement learning. It is a combination of Monte Carlo (MC) and dynamic programming (DP) ideas. Similar as MC they do not need a model and can directly learn from experiences. Similar to DP the updates of the value functions are based on already learned values of other states, in other words the bootstrap. Bootstrap means using estimation values for other states.
+So, what is better MC or TD. If the world can be viewed as Markovian is better. That's because the TD algorithm builds up a Markov Model and then uses Maximum Likelihood to solve it. Thus they learn faster. Furthermore, MC better approximates the learning data, but has a worse error for future data.
+
+**SARSA** <br>
+
+**Q-Learning** <br>
+
+**Double Q Learning** <br>
+The idea behin Q Learning is to decorrelate the selection of the best action from the evaluation of this action. Why is this neccessary? Because the expectations of a maximum is greater or equal than the maximum of an expectation. This introduces a maximization bias.
+
+A more informal, but helpful description is that assuming in a state S<sub>t+1</sub> all true action-values are 0. But due to noise in the estimation some action-values get small negative and small positive values. Now updating the Q(S<sub>t</sub>,a) uses the max(Q(S<sub>t+1</sub>,a), which will be positive due to the maximization. The problem can be viewed as using the Q function for action and value selection. A better approach is to used a second Q function. One is used for selecting what the best action is. The other one for finding the corresponding value. What does this change? The first Q function tells which action is the best. Then the second one is used for finding the value. As the second Q function is also noisy it therefore has also small posivite/negative values. The main assumption is that the second Q function is noisy in a different way and therefore on average the value is closer to 0.
+![Image](https://github.com/steffenkoerner/ReinforcementLearning/blob/master/DoubleQ.PNG)
+
+### Additional Information
+
+
+## Chapter 7: Multi-step Bootstrapping
+### Learning Goals
+- Similarity betwwen temporal difference learning and monte carlo methods
+### Summary
+### Additional Information
+
+## Chapter 8: Planning and Learning with Tabular Methods
+### Learning Goals
+- Similarity between planning an learning
+- DYNA-Q
+- Prioritized Sweeping
+- The two different views of planning
+- Heuristic Search
+- Monte Carlo Tree Search 
+
+### Summary
+
+**Similarity between planning an learning** <br>
+This chapter discussed the relationship between planning and learning. Both are estimating the value function and creating a policy. While learning is done via examples, planning is done on a model. A learning algorithm can be transformed into a planning algorithm. This can be done by using the real world experiences to build a model. This model then can be used to simulate experiences the learning algorithm can work on.
+
+**DYNA-Q** <br>
+
+**Prioritized Sweeping** <br>
+Prioritized sweeping is a model-based reinforcement learning method that guides the computation of state-action pair updates in a more efficient order. It tries to focus on parts where updates achieve good results. The idea in prioritzied sweeping is that if an state-action value of a state changes more than a defined threshold, then all the states that lead to this state should also be updated. This is important as in large state spaces an unfocused search would be extremely inefficient. One limitation of this method is that it uses full backups.
+
+**The two different views of planning** <br>
+The first view of planning is as used so far in the book. That means viewing it as improving the policy or value function, which considers all states. The second view is to focus only on a particular state and only decides which action is the best. In the next step the planning process restarts.
+
+**Heuristic Search** <br>
+
+**Monte Carlo Tree Search (MCTS)** <br>
+The method is based on the fact that the model and simulated trajectories are fast to generate. The MCTS is an interative process that consists of four stages: Selection, Expansion, Simulation and Backpropagation.
+
+### Additional Information
+
+## Chapter 9: On-policy Prediction with Approximation
+### Learning Goals
+- Function Approximation
+- Semi-Gradient
+
+### Summary
+
+**Function Approximation** <br>
+
+## Chapter 10: On-policy Control with Approximation
+### Learning Goals
+- Average Reward
+- Do we really need discounting
+
+## Chapter 11: Off-policy Methods with Approximation
+### Learning Goals
+
+## Chapter 12: Eligibility Traces
+### Learning Goals
+
+## Chapter 13: Policy Gradient Methods
+### Learning Goals
+- Difference between value based methods and gradient methods
+- REINFORCE algorithm
+- Actor Critic Methods
+
+
+### Summary
+
+**Difference between value based methods and policy gradient methods** <br>
+In reinforcement learning there are two main approaches. Value based and gradient based methods. Value based methods learn an action value functions by using the Bellmann equations. The action value function then can be transformed into a policy by a greedy approach. In contrast to that policy gradient methods directly update the parameter of a policy. This methods can be improved further by value based methods which leads to actor critic methods.
+
+**Actor Critic Methods** <br>
+Methods that learn approximations to policy and value functions are called actor-critic methods.
+
+
+## Things to map to some chapter or in an additional own one
+- Credit Assignment Problem -- Delayed Rewards
+- Replay buffer (Hands on p. 128)
+- target network (Hands on p. 128)
+
+### Markdown
+
+Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+
+```markdown
+Syntax highlighted code block
+
+# Header 1
+## Header 2
+### Header 3
+
+- Bulleted
+- List
+
+1. Numbered
+2. List
+
+**Bold** and _Italic_ and `Code` text
+
+[Link](url) and ![Image](src)
+```
+
+For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+
+### Jekyll Themes
+
+Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/steffenkoerner/ReinforcementLearning/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+
+### Support or Contact
+
+Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
