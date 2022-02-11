@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Reinforcement Learning"
+title:  "Introduction to Reinforcement Learning"
 date:   2022-02-10 Reinforcement Learning
 categories: Reinforcement Learning
 ---
