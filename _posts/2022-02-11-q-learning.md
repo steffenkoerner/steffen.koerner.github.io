@@ -28,7 +28,7 @@ state S' we end if we execute action a in state s. In reinforcement learning we 
 Thus, instead of storing only the expected return for a state we store the expected return for each action we can do in
 that state. This function is called action value function.
 
-$$Q(s,a)^{\pi} = \mathbb{E}_{\pi}[R_t(\tau) | S_t=s, A_t=a]$$
+$$Q^{\pi}(s,a)= \mathbb{E}_{\pi}[R_t(\tau) | S_t=s, A_t=a]$$
 
 Having the q-values stored for each state we can easily chose the action that returns the highest expected return.
 
@@ -47,7 +47,7 @@ $$V^*(s) =  \operatorname*{max}_{\pi} V^{\pi}(s)$$
 
 Analogusly, we can define the optimal action value function:
 
-$$Q(s,a)^* = \operatorname*{max}_{\pi} Q^{\pi}(s,a)$$
+$$Q^*(s,a) = \operatorname*{max}_{\pi} Q^{\pi}(s,a)$$
 
 # Solving the Grid World
 Finally, we are ready to solve our first reinforcement learning problem. This will be amazing. At first we will define the problem we need to specifiy the environment we want to solve.
@@ -65,7 +65,8 @@ executes action up in state (0,0) he will end up in state (1,0). If he evaluates
 stay in the same state. This means that action left in state(1,0) will lead to state(1,0).
 
 ## How does the Agent Learn
-The goal of the agent is to reach the start, which is in the top right corner. We define the reward function as +1 for reaching the star and 0 otherwise. The discount factor $$\gamma = 1$$.
+The goal of the agent is to reach the start, which is in the top right corner. We define the reward function as +1 for reaching the star and 0 otherwise. The discount factor $$\gamma = 0.9$$. The influence of the reward function to the
+behaviour of the agent we already discussed in the last post.
 
 The agent has no idea about the dynamics of the environment and thus moves accoding to it starting policy $$\pi_{0}$$, which normally results in random behaviour. The agent chooses actions according to this policy and tries to learn a better one. This means to achieve a higher expected return. We will define this more formally in a few minutes.
 
@@ -73,10 +74,12 @@ Let's assume this is the first trajectory $$\tau^{\pi_0}=((0,0),up,0,(1,0),right
 
 ![Grid World Trajectory](/images/grid_world_trajectory.png)
 
-What has the agent learn now? He learned that action right in state(3,2) is good as he got a reward of +1. This
+What has the agent learn now? He learned that action right in state (3,2) is good as he got a reward of +1. This
 is very obvious. But what about all the other states that are part of this trajectory.
 
 
+
+These method is called Monte Carlo.
 
 +++++++++++++++ Unordered Things
 
