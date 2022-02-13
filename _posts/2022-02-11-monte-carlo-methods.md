@@ -1,58 +1,18 @@
 ---
 layout: post
-title:  "Solving Reinforcement Learning"
+title:  "Monte Carlo Methods"
 date:   2022-02-11
 categories: Reinforcement Learning
 ---
 
-In the post about reinforcement learning we looked at the key concepts of reinforcement learning and what problem we actually want to solve. Now we want to adress how to solve this problem.
-
-Before we can combine the faszinating part of understanding how we can sove the problem we need to clarify one more concept. And this is state vaue and action value functions. Let's get started.
- 
-
-# State Value Function and Action Value Function
-A state value function $$V: S \to \mathbb{R}$$ maps states to a value. This value represents the expected return the agent gets if he starts in a state and then acts accoring to its policy. 
-
-$$V^{\pi}(s) =  \mathbb{E}_{\pi}[R_t(\tau) | S_t=s] = \mathbb{E}_{\pi} [\sum_{k=0}^{\infty} \gamma^k r_{t+1+k}]$$
-
-How can this value help us? In the end we are interested in a policy $$\pi$$ and that is a mapping from state to action.
-
-One approach is to evaluate for each possible action in state s what the reward belongs to this action and what is
-the expected return of the state s' we end up by this action.
-
-$$a = \operatorname*{arg\max}_{a \in A}\mathbb{E}_{\pi}[R_a(s,s') + V(s')]$$
-
-This is a valuation solution in a MDP, as there we know the state transition function, meaning that we know in which 
-state S' we end if we execute action a in state s. In reinforcement learning we unfortunately don't know this.
-
-Thus, instead of storing only the expected return for a state we store the expected return for each action we can do in
-that state. This function is called action value function.
-
-$$Q^{\pi}(s,a)= \mathbb{E}_{\pi}[R_t(\tau) | S_t=s, A_t=a]$$
-
-Having the q-values stored for each state we can easily chose the action that returns the highest expected return.
-
-$$Q(s,a)=\operatorname*{arg\max}_{a \in A}Q(s,a)$$
+In the post about the [reinforcement learning basics]({% post_url 2022-02-10-reinforcement-learning-basics %}) we looked at the key concepts of reinforcement learning and what problem we actually want to solve. Now we want to adress how this problem can be
+solved. There are multiple methods and in this post we want to have a closer look at Monte Carlo Methods.
 
 
-## Optimal Value Function
-We already talked a few times about the optimal value function and the improved or optimal policy. We intuitively understand what is meant by that. But we missed a formal definition so far. 
-A policy $$\pi$$ is better than a policy $$\pi'$$:
+# The Grid World
+Finally, we are ready to solve our first reinforcement learning problem. This will be amazing. At first we need to specify
+the environment we want to solve.
 
-$$\pi \geq \pi' \text { if and only if } V^{\pi}(s) \geq V^{\pi'}(s), \forall s \in S$$
-
-The optimal value function is defined as:
-
-$$V^*(s) =  \operatorname*{max}_{\pi} V^{\pi}(s)$$
-
-Analogusly, we can define the optimal action value function:
-
-$$Q^*(s,a) = \operatorname*{max}_{\pi} Q^{\pi}(s,a)$$
-
-# Solving the Grid World
-Finally, we are ready to solve our first reinforcement learning problem. This will be amazing. At first we will define the problem we need to specifiy the environment we want to solve.
-
-## Environment - Grid World
 Welcome back in our 4x4 gridworld we already visited last time. Lets's quickly recap the setting.
 
 Imagine we have a 4x4 grid world and the goal of the agent is to find the star. See in the image below.
@@ -182,31 +142,7 @@ Now we continue with the previous state.
                     Q(S_t,a_t) = average(Return(s,a))
 
 
-## Monte Carlo Methods Summary
+## Summary
 This section described how we can use a Monte Carlo approach to solve the grid world with reinforcement learning. The good thing
 is that the agent can directly learn from the experiences without the need of a model. But we still need to have a full episode
 with a final outcome to learn from the data. A di
-
-# Temporal Difference Learning (TD Learning)
-Temporal Difference Learning (TD Learning) solves the same problem as the Monte Carlo Methods. Where MC needs a full episode, TD methods update their estimates based on estimates of other states. Thus, there is no need to wait until the end of a episode.
-Updating an estimate without waiting for the end is called bootstrapping. Maybe it still sounds a bit vague. Let's save the our
-gridworld with the TD method.
-
-
-# +++++++++++++++ Unordered Things
-
-
-Q Learning
-
-Bellmann Equation
-
-Temporal Difference Learning
-Monte Carlo Methods
-SARSA
-On Policy Learning 
-Off Policy Learning
-
-The connection between Monte Carlo and TD Learning (n-step TD Learning)
-
-++++ Think about how to create a graph by code. Then there is no need to drag and drop and adapt the things
-

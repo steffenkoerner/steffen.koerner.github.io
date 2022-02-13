@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Introduction to Reinforcement Learning"
+title:  "Reinforcement Learning Basics"
 date:   2022-02-10 Reinforcement Learning
 categories: Reinforcement Learning
 ---
@@ -76,6 +76,45 @@ you exactly know which action the agent picks in state s.
 Otherwise, the policy is called stochastic. In this case, you don't know exactly which action is picked. You just know the probability
 distribution. An example for state $$s_{1}$$ could be $$\pi(a_{1}|s_{1})= 0.3$$,  $$\pi(a_{2}|s_{1})= 0.5$$ and  $$\pi(a_{3}|s_{1})= 0.2$$. Where
 $$\pi(a_{1}|s_{1})$$ means the probability of selecting action $$a_1$$ in state $$s_1$$.
+
+# State Value Function and Action Value Function
+A state value function $$V: S \to \mathbb{R}$$ maps states to a value. This value represents the expected return the agent gets if he starts in a state and then acts according to its policy. 
+
+$$V^{\pi}(s) =  \mathbb{E}_{\pi}[R_t(\tau) | S_t=s] = \mathbb{E}_{\pi} [\sum_{k=0}^{\infty} \gamma^k r_{t+1+k}]$$
+
+How can this value help us? In the end we are interested in a policy $$\pi$$ and that is a mapping from state to action.
+
+One approach is to evaluate for each possible action in state s what the reward belongs to this action and what is
+the expected return of the state s' we end up by this action.
+
+$$a = \operatorname*{arg\max}_{a \in A}\mathbb{E}_{\pi}[R_a(s,s') + V(s')]$$
+
+This is a valid solution in a Markov Decision Process, as there we know the state transition function, meaning that we know in which 
+state S' we end if we execute action a in state s. In reinforcement learning, we unfortunately don't know this.
+
+Thus, instead of storing only the expected return for a state, we store the expected return for each action we can do in
+that state. This function is called action value function.
+
+$$Q^{\pi}(s, a)= \mathbb{E}_{\pi}[R_t(\tau) | S_t=s, A_t=a]$$
+
+Having the q-values stored for each state, we can easily choose the action that returns the highest expected return.
+
+$$Q(s, a)=\operatorname*{arg\max}_{a \in A}Q(s,a)$$
+
+
+## Optimal Value Function
+We already talked a few times about the optimal value function and the improved or optimal policy. We intuitively understand what is meant by that. But we missed a formal definition so far. 
+A policy $$\pi$$ is better than a policy $$\pi'$$:
+
+$$\pi \geq \pi' \text { if and only if } V^{\pi}(s) \geq V^{\pi'}(s), \forall s \in S$$
+
+The optimal value function is defined as:
+
+$$V^*(s) =  \operatorname*{max}_{\pi} V^{\pi}(s)$$
+
+Analogously, we can define the optimal action value function:
+
+$$Q^*(s,a) = \operatorname*{max}_{\pi} Q^{\pi}(s,a)$$
 
 ## The Goal of Reinforcement Learning
 In the beginning, we said that the goal of the agent is to maximize the expected return $$J$$. Let's define this in a more formal way.
