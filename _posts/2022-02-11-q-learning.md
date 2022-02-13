@@ -139,39 +139,62 @@ This approach leads finally to the optimal state action value and thus our agent
 This kind of sample based method is called **Monte Carlo Methods** and we will formalise a pseudocode algorithm in the next section.
 
 # First-Visit Monte Carlo Method
-In the section before we described an approach to learn the optimal policy. This approach is based on Monte Carlo Methods. There are different Monte Carlo Methods like First-Visit/Every-Visit and many more variants. We will focus on the first visit one and 
-define it in pseudocode.
+In the section before we described an approach to learn the optimal policy by random sampling. These approaches are in general
+called Monte Carlo Methods ([Wikipedia Article on Monte Carlo Methods](https://en.wikipedia.org/wiki/Monte_Carlo_method)).
 
-{% highlight ruby %}
-def CalculateFirstVisitMC()
-    Initalise policy as \epsilon-greedy
-    Initialise Q(s,a) arbritarily for all s in S and a in A
-    Returns(s,a) = empty list of returns for all s in S and a in A
+In a trajectory it's possible to see the same state action value multiple times. This means haveing a circle in the states
+that have been visited. We need to discuss how we handle these multiple occurences of state action values. 
 
-    for episode in episodes:
-        Generate Trajectory based on current policy \pi
-        Return = 0
+One easy way is to only use the first visit of an state action value to update it. The corresponding method is called
+First-Visit Monte Carlo Method. 
 
-        Return = \gamma * Return + r_{t+1}
-        If St,At is first appearance in trajectory
-            Append Return to Returns(S_t,A_t)
-            Q(S_t,a_t) = average(Return(s,a))
-  puts "Hi, #{name}"
-end
-print_hi('Tom')
-#=> prints 'Hi, Tom' to STDOUT.
-{% endhighlight %}
+In this method we only look at the first visit of each q-value and update it. Later occurences of the q-value are ignored.
+
+Let's shortly talk through the pseudo code below.
+
+At the beginning we initalize all q-values with an arbritrary value and initalize a epsilon greedy policy.
+Each q-value has a list of returns that are used to build the average. At the beginning we not to clear this list.
+
+The following part will be removed until our algorithm converged.
+
+We generate a trajectory $$\tau$$ based on the current policy $$\pi$$ and initalize the return of this trajectory to 0.
+Now we start with the next to last state and update the return by the reward of this step and a discounted reward of the future
+returns.
+
+If the state action value is the first appearance of this combination than update everything. Meanig to add this value to the list and calculate the average of them. If it is not the first appearance than nothing will be updated yet. 
+
+Now we continue with the previous state.
 
 
+@ TODO: Convert to latex algorithm
+    def CalculateFirstVisitMC():
+        Initialise Q(s,a) arbritarily for all s in S and a in A
+        Initalise policy as \epsilon-greedy
+        Returns(s,a) = empty list of returns for all s in S and a in A
+
+        for episode in episodes:
+            Generate Trajectory based on current policy \pi
+            Return = 0
+            Iterate from the last state in the trajectory towards the first state
+                Return = r_{t+1} + \gamma * Return 
+                If St,At is first appearance in trajectory
+                    Append Return to Returns(S_t,A_t)
+                    Q(S_t,a_t) = average(Return(s,a))
+
+
+## Monte Carlo Methods Summary
+This section described how we can use a Monte Carlo approach to solve the grid world with reinforcement learning. The good thing
+is that the agent can directly learn from the experiences without the need of a model. But we still need to have a full episode
+with a final outcome to learn from the data. A di
 
 # Temporal Difference Learning (TD Learning)
+Temporal Difference Learning (TD Learning) solves the same problem as the Monte Carlo Methods. Where MC needs a full episode, TD methods update their estimates based on estimates of other states. Thus, there is no need to wait until the end of a episode.
+Updating an estimate without waiting for the end is called bootstrapping. Maybe it still sounds a bit vague. Let's save the our
+gridworld with the TD method.
+
 
 # +++++++++++++++ Unordered Things
 
-Value Function
-Value Iteration
-
-Policy Iteration
 
 Q Learning
 
