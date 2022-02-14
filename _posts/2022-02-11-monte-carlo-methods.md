@@ -127,25 +127,11 @@ If the state action value is the first visit from the start state, then we updat
 Now we continue with the previous state.
 
 
-@ TODO: Convert to latex algorithm
-    def CalculateFirstVisitMC():
-        Initialise Q(s,a) arbritarily for all s in S and a in A
-        Initalise policy as \epsilon-greedy
-        Returns(s,a) = empty list of returns for all s in S and a in A
-
-        for episode in episodes:
-            Generate Trajectory based on current policy \pi
-            Return = Return of the Trajectory
-            Iterate from the last state in the trajectory towards the first state
-                Return = r_{t+1} + \gamma * Return 
-                If St,At is first appearance in trajectory
-                    Append Return to Returns(S_t,A_t)
-                    Q(S_t,a_t) = average(Returns(s,a))
-
+![First Visit Monte Carlo Method](/images/algorithm_first_visit.png)
 
 ## Summary
 This post describes how we can use the First-Visit Monte Carlo to train our agent to solve the grid world. One advantage of this method ist that the agent can directly learn from the experiences without the need of a model. Thus, we only need a way to 
 sample from the environment which is often not a problem. Especially, if we use a simulation.
 
 A disadvantage is that the method needs a complete trajectory to learn from. Thus, in the next post we will analyze a method
-than does not need the complete trajectory
+than does not need the complete trajectory.
