@@ -7,19 +7,39 @@
 
 \begin{document}
 \begin{algorithm}
-\caption{Model Creation Algorithm}\label{aModelCreation}
-\textbf{algorithm} CreateModel(hypotheses, stepwidth)
+\caption{Calculate First Visit Monte Carlo}
+\textbf{algorithm} Calculate First Visit Monte Carlo()
 \begin{algorithmic}[1]
-\Statex \textbf{Input 1:} A set of hypotheses
-\Statex \textbf{Input 2:} The length of the intervals of the local reference system
-\Statex \textbf{Output:} The model
+\Statex \textbf{Output:} The policy
 \Statex
+\State Initalize Q(s,a) arbitrarily $\forall$ s $\in$ S and a $\in$ A
+\State Initalize policy as $\epsilon-greedy$
+\State Returns(s,a) = Empty list $\forall$ s $\in$ S and a $\in$ A
 \ForAll{ h $\in$ hypotheses } 
-\State h = DouglasPeuker(h)
+\State Generate trajectory $\tau$ with current policy
+\State Return = Return of the trajectory
+\For {last state to first state}
+\State dfadsf
+\EndFor
 \EndFor
 \State clusters := Clustering(hypotheses, stepwidth)
 \State model := Structuring(clusters)
-\State $\textbf{return}$ model
+\State $\textbf{return}$ policy
 \end{algorithmic}
 \end{algorithm}
 \end{document}
+
+
+    def CalculateFirstVisitMC():
+        Initialise Q(s,a) arbritarily for all s in S and a in A
+        Initalise policy as \epsilon-greedy
+        Returns(s,a) = empty list of returns for all s in S and a in A
+
+        for episode in episodes:
+            Generate Trajectory based on current policy \pi
+            Return = Return of the Trajectory
+            Iterate from the last state in the trajectory towards the first state
+                Return = r_{t+1} + \gamma * Return 
+                If St,At is first appearance in trajectory
+                    Append Return to Returns(S_t,A_t)
+                    Q(S_t,a_t) = average(Returns(s,a))
