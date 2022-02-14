@@ -1,0 +1,25 @@
+
+	
+
+\documentclass[11pt,twoside,a4paper]{article}
+\usepackage{algorithm}
+\usepackage[]{algpseudocode}
+
+\begin{document}
+\begin{algorithm}
+\caption{Model Creation Algorithm}\label{aModelCreation}
+\textbf{algorithm} CreateModel(hypotheses, stepwidth)
+\begin{algorithmic}[1]
+\Statex \textbf{Input 1:} A set of hypotheses
+\Statex \textbf{Input 2:} The length of the intervals of the local reference system
+\Statex \textbf{Output:} The model
+\Statex
+\ForAll{ h $\in$ hypotheses } 
+\State h = DouglasPeuker(h)
+\EndFor
+\State clusters := Clustering(hypotheses, stepwidth)
+\State model := Structuring(clusters)
+\State $\textbf{return}$ model
+\end{algorithmic}
+\end{algorithm}
+\end{document}
