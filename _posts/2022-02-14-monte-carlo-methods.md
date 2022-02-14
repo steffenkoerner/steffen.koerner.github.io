@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Monte Carlo Methods"
-date:   2022-02-11
+date:   2022-02-14
 categories: Reinforcement Learning
 ---
 
@@ -118,11 +118,11 @@ Each q-value has a list of returns that are used to calculate the average. At th
 
 The following part will be repeated until the algorithm converged.
 
-We generate a trajectory $$\tau$$ based on the current policy $$\pi$$ and initalize the return of this trajectory to 0.
+We generate a trajectory $$\tau$$ based on the current policy $$\pi$$ and initialize the return of this trajectory to 0.
 Now, we start with the next to last state and update the return by the reward of this step and the returns from the next step.
 We start from behind, as this makes it easier to update the return.
 
-If the state action value is the first visit from the start state, then we update the value. This means, we add this value to the list and calculate the average of them. If it is not the first visit, than nothing will be updated yet. 
+If the state action value is the first visit from the start state, then we update the value. This means, we add this value to the list and calculate the average of them. If it is not the first visit, then nothing will be updated yet. 
 
 Now we continue with the previous state.
 
@@ -130,8 +130,6 @@ Now we continue with the previous state.
 ![First Visit Monte Carlo Method](/images/algorithm_first_visit.png)
 
 ## Summary
-This post describes how we can use the First-Visit Monte Carlo to train our agent to solve the grid world. One advantage of this method ist that the agent can directly learn from the experiences without the need of a model. Thus, we only need a way to 
-sample from the environment which is often not a problem. Especially, if we use a simulation.
+This post describes how we can use the First-Visit Monte Carlo to train our agent to solve the grid world. One advantage of this method is that the agent can directly learn from the experiences without the need of a model. Thus, we only require a way to sample from the environment, which is often not a problem. Especially, if we use a simulation.
 
-A disadvantage is that the method needs a complete trajectory to learn from. Thus, in the next post we will analyze a method
-than does not need the complete trajectory.
+A disadvantage is that the method requires a complete trajectory to learn from. Thus, in the next post, we will analyse a method that does not need the complete trajectory.
