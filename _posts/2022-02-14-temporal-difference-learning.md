@@ -53,20 +53,7 @@ Even though there seems to be only a small difference to SARSA, which is to pick
 ## Summary
 In this post we discussed the temporal difference learning approach to solve the reinforcement learning problem. We discussed the similarities and differences to the Monte Carlo approach from the [last post]({% post_url 2022-02-14-monte-carlo-methods %}).
 
-We looked at the SARSA and Q-Learning algorithm and described their fundamental differences.
-
-## Q-Learning
-
-# +++++++++++++++ Unordered Things
+We looked at the SARSA and Q-Learning algorithm and described their fundamental differences. 
 
 
-Q Learning
-Sarsa
-SARSA
-On Policy Learning 
-Off Policy Learning
-
-The connection between Monte Carlo and TD Learning (n-step TD Learning)
-
-++++ Think about how to create a graph by code. Then there is no need to drag and drop and adapt the things
 
