@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Temporal Difference Learning"
-date:   2022-02-14
+date:   2022-02-26
 categories: Reinforcement Learning
 ---
 
