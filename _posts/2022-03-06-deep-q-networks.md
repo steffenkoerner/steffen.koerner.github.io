@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Deep Q-Networks"
+title:  "Deep Q-Networks (DQN)"
 date:   2022-03-06
 categories: Deep Reinforcement Learning
 ---
@@ -41,34 +41,32 @@ The buffer in this context is called **replay buffer** as you replay transistion
 The process of sampling a subset from the replay buffer to learn from it is called **experience replay**.
 
 ### Target Networks
-
-## Summary
-Let's have a look at the Q-Learning formula again:
+Let's have a look at the Q-Learning formula we discussed in the [Temporal Difference Learning post]({% post_url 2022-02-26-temporal-difference-learning %}).
 
 $$Q(s,a) = Q(s,a) + \alpha * (r + \gamma * \max_{a'}Q(s',a') - Q(s,a))$$
 
-Instead of looking up Q(s,a) and Q(s',a') in a table we now approximate it with a Deep Q-Network.
+The update of Q(s,a) is based on the estimate Q(s',a'), which means that we are updating an estimation by an estimation. As the states s and s' are close to each other, an update of the weights of the Neural Network to improve the estimate of Q(s,a) can at the same time influence the estimate Q(s',a') and other close states.
 
-For this we use a neural network with the state s as input and the action a as output. 
+This can lead to an unstable learning process.
 
-The training of the Neural Networks happens by interaction
+The learning process can be made more stable by using a **target network**. The target network is a copy of the original network and is used to estimate Q(s',a'). The original network is updated during training. 
+After some episodes the learned weights are copied to the target network.
 
-The implementation of the Neural Network can be found in [Github Implementation](https://github.com/steffenkoerner/deep_reinforcement_learning/tree/main/library)   
-
-
-# Stochastic Gradient Descent (SGD)
-Stochastic Gradient 
-=> Replay Buffer
-
-# Correlation
-
-The algorithm described in this post was used from Deepmind to successfully train a DQN for multiple atari games and demonstrated the performance.
-
-[Playing Atari with Deep Reinforcement Learning](https://arxiv.org/abs/1312.5602)
-[Human-level control through deep reinforcement learning](https://www.semanticscholar.org/paper/Human-level-control-through-deep-reinforcement-Mnih-Kavukcuoglu/e0e9a94c4a6ba219e768b4e59f72c18f0a22e23d)
+The additional target network stabilises the learning process.
 
 
-Since these two papers appeared there have been many more extension to DQN's that tried to overcome various shortcomings. Let's shortly have a look at them. If I find time I will implement these extension and create a more detailed post.
+## Summary
+In this post we discussed how we can handle environments with a huge state space. We used Neural Networks to approximate Q(s,a). The described algorithm using a Neural Network with replay buffer and target network was firstly
+described by DeepMind.
+
+They used it successfully train a DQN for multiple atari games and demonstrated the performance.
+More information can be found in their two famous papers.
+
+- [Playing Atari with Deep Reinforcement Learning](https://arxiv.org/abs/1312.5602)
+- [Human-level control through deep reinforcement learning](https://storage.googleapis.com/deepmind-media/dqn/DQNNaturePaper.pdf)
+
+
+Since these two papers appeared there have been many more extension to DQN's that tried to overcome various shortcomings. They dramatically improved the performance. The most famous extensions are listed below.
 
 
 - [Rainbow: Combining Improvements in DRL](https://arxiv.org/abs/1710.02298)
@@ -78,3 +76,6 @@ Since these two papers appeared there have been many more extension to DQN's tha
 - [Dueling Network Architectures for DRL](https://arxiv.org/abs/1511.06581)
 - [A Distributional Perspective on RL](https://arxiv.org/abs/1707.06887)
 - [N-steps DQN](https://arxiv.org/abs/1901.07510)
+
+
+This approach works quite good if the actions are discrete and the action space is small. But what happens if the action space is infinite or the action are discrete. Then we can't use a DQN. One solution is policy gradient which we will discuss in the next post.
