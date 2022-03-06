@@ -93,17 +93,13 @@ This extension is called Noisy Networks and is described in this paper: [Noisy N
 
 
 ### Dueling Network
-This extension is called Dueling Network and is described in this paper:[Dueling Network Architectures for DRL](https://arxiv.org/abs/1511.06581)
+This extension is called Dueling Network and is described in this paper: [Dueling Network Architectures for DRL](https://arxiv.org/abs/1511.06581)
 
-###
+### Distributional RL
+This extension is called Distributional RL and is described in this paper: [A Distributional Perspective on RL](https://arxiv.org/abs/1707.06887)
 ## Rainbow
 The rainbow algorithm combines all the mentioned extensions. It shows superior performance results. Detailed description and 
 analysis can be found in the paper: [Rainbow: Combining Improvements in DRL](https://arxiv.org/abs/1710.02298)
-
-### Others
-
-- [A Distributional Perspective on RL](https://arxiv.org/abs/1707.06887)
-- 
 
 
 ## Summary
