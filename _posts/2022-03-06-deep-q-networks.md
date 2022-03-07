@@ -40,7 +40,7 @@ Unfortunately, it's not possible to directly use the data that is coming from th
 ### Experience Replay
 Training a Neural Network uses stochastic gradient descent. This algorithm assumes that the training data is independent and identically distributed (i.i.d). Unfortunately, our training data doesn't fulfill this assumption.
 
-It is not independent as the data is received is coming from an agent that is following a policy. In other words, the next state and the current state is coupled by the current policy. Thus, the agent can't learn directly from the observations. 
+It is not independent as the data is received is coming from an agent that is following a policy. In other words, the next state and the current state is coupled by the current policy in temporarlly way. Thus, the agent can't learn directly from the observations. 
 
 This problem can be adressed with a buffer. The buffer stores the data collected through many episodes. The stored experiences are (s,a,r, s'). During the learning process a subset is sampled randomly from the buffer. This approach leads to the fulfillment of i.i.d experiences and thus we can train our Neural Network.
 
@@ -78,8 +78,16 @@ The algorithm described above is called DQN. More information can be found in th
 - [Human-level control through deep reinforcement learning](https://storage.googleapis.com/deepmind-media/dqn/DQNNaturePaper.pdf)
 
 ### Problems
-DQN has problems with continous action spaces. In this case a common solution is to discretize the action spaces.
-A natural extension to contious action spaces are algorithms that are based on gradients.
+The DQN takes a representation of the state as input and outputs all the state action values. But what happens if the action space is continous. This means instead of just picking a action also the intensity of it. How could a DQN solve this issue?
+One way would be to discretize the action space. But how fine granular do you want to discretize the space.
+
+Many of this problems come from the fact that we estimate the state action values and then use the maximum value as action. But why do we do this extra step. Can't we directly estimate the action instead of doing this extra step. It has shown that we actually can go directly to the actions. This will be discussed in detail in one of the next posts..
+
+Can it only handle low dimensional spaces?
+
+Thus, DQN is not very suitable for robotic applications where the actions are concrete and the action space is high dimensional.
+
+Imagine the robots Atlas from Boston Dynamic. It has 28 degrees of freedom. If we discretize the action for each degree into 10 possible ways we would have $$10^{28}$$ output neurons.
 
 ## Summary
 In this post we discussed how we can handle environments with a huge state space. We used Neural Networks to approximate Q(s,a). The described algorithm using a Neural Network with replay buffer and target network was firstly
