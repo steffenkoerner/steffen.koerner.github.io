@@ -15,12 +15,25 @@ One approach is to compare your algorithm to a baseline implementation. A baseli
 For discrete action spaces like in(DQN, PPO,..) the atari environments from open ai are a very good basis. [OpenAI Gym](https://gym.openai.com/)
 
 
+
+
+### Baselines
+[OpenAI Baselines]()
+[Stable Baselines3](https://github.com/DLR-RM/stable-baselines3)
+[RL Baselines3 Zoo](https://github.com/DLR-RM/rl-baselines3-zoo)
+
+In the following we will use the Stable Baselines 3 framework for evaluation. More information on it can be found in the following [blog post](https://araffin.github.io/post/sb3/)
+
+
+# Environments for Evaluating the Algorithm
 ### Open AI Gym
 This is by fast amount the most popular benchmark for reinforcement learning algorithm. It contains a fast amount of different
 
 
 ### Unity Environment
-Unity aso provide some very interesing scenarios that have higher qualtiy than the Gym ones. I really like to work with them
+![Unity Environments](https://github.com/steffenkoerner/steffenkoerner.github.io/tree/master/images/unity-example-envs.png)
+Unity aso provide some very interesing scenarios that have higher qualtiy than the Gym ones. I really like to work with them as the quality of the environments is really good. You can check it out
+at [untiy repo](https://github.com/Unity-Technologies/ml-agents/blob/main/docs/Learning-Environment-Examples.md)
 
 ### Google Research Football (GRF)
 This is a very cool environment, where the goal is to learn the most popular game in Europe - Football. Unfortunately, until now I haven't worked with this environment as it seems more complex to learn. But I am a huge football fan and thus definitely want to tackle this environement. Until I am ready I tackle the unity soccer environment that seems to be easier to solve.
@@ -29,5 +42,8 @@ More information can be found in the [Google Research Football Github](https://g
 
 
 If you are interested how you compare to other people trying to solve this environment, then you can check out the [Kaggle Competition ](https://www.kaggle.com/c/google-football/overview/training-rl-agents)
+
+### Deepmind Lab
+[Deepmind Lab Blog](https://deepmind.com/blog/article/open-sourcing-deepmind-lab) and [Deepmind Lab Github](https://github.com/deepmind/lab)
 
 
