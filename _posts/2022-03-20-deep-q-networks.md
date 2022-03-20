@@ -52,12 +52,12 @@ $$Q(s,a) = Q(s,a) + \alpha * (r(s,a) + \gamma * \max_{a'}Q(s',a') - Q(s,a))$$
 
 We want to minimize the square of this error. This can be done by backpropagation. 
 
-Unfortunately, it's not possible to directly use the data when it is coming from the environment. This means when we collected the experience (s,a,r,s',a') we can't directly update the weights of the Neural Network.
+Unfortunately, it's not possible to directly use the data when it is coming from the environment. This means when we collected the experience (s,a,r,s') we can't directly update the weights of the Neural Network.
 
 That's a problem and in the following we discuss why it is a problem and how to overcome it.
 
 ### Experience Replay
-Training a Neural Network uses stochastic gradient descent. This algorithm assumes that the training data is independent and identically distributed (i.i.d). Unfortunately, our training data doesn't fulfill this assumption.
+Training a Neural Network with backpropagation uses stochastic gradient descent. This algorithm assumes that the training data is independent and identically distributed (i.i.d). Unfortunately, our training data doesn't fulfill this assumption.
 
 It is not independent as the data is received is coming from an agent that is following a policy. In other words, the next state and the current state is coupled by the current policy in temporarlly way. Thus, the agent can't learn directly from the observations. 
 
@@ -65,52 +65,50 @@ This problem can be adressed with a buffer. The buffer stores the data collected
 
 A simple implementation of a buffer is a ringbuffer of a fixed size. Mainly in the order of at least 100,000. This means that if the buffer is full a newly added experience pushes out the oldes one.
 
-The buffer in this context is called **replay buffer** as you replay transistions that you have recorded.
+The buffer in this context is called **replay buffer** as you replay experiences that you have recorded.
 
 The process of sampling a subset from the replay buffer to learn from it is called **experience replay**.
 
 ### Target Networks
-Let's have a look at the Q-Learning formula we discussed in the [Temporal Difference Learning post]({% post_url 2022-02-26-temporal-difference-learning %}).
+We used supervised learning for training. Unfortunately, the approach is not directly supervised learning as the target depends on the network weights. The target is
 
-Unfortunately, the approach is not directly supervised learning as the target depends on the network weights. The target is
+ $$y_i = r_i + \gamma \max_{a'}Q_{\phi}(s',a') $$
 
- $$y_i = r_i + \gamma \max_{a'}Q(s',a') $$
+ The problem is that updating the weights that $$Q_{\phi}(s,a)$$ is closer to y_i can also change y_i. 
 
- The problem is that updating the weights that $$Q(s,a) is closer to y_i also changes y_i as 
 
-Thus we need to update the formula to:
-
-$$Q(s,a) = Q(s,a) + \alpha * (r + \gamma * \max_{a'}Q_T(s',a') - Q(s,a))$$
-
-,where $$Q_T$$ is the target network.
 
 The update of Q(s,a) is based on the estimate Q(s',a'), which means that we are updating an estimation by an estimation. As the states s and s' are close to each other, an update of the weights of the Neural Network to improve the estimate of Q(s,a) can at the same time influence the estimate Q(s',a') and other close states. This can lead to an unstable learning process.
 
 The learning process can be made more stable by using a **target network**. The target network is a copy of the original network and is used to estimate Q(s',a'). The original network is updated during training. 
 After some episodes the learned weights are copied to the target network.
 
+Thus we need to update the formula to:
+
+ $$y_i = r_i + \gamma \max_{a'}Q_{T_{\phi}}(s',a') $$
+
+,where $$Q_{T_{\phi}}$$ is the target network.
+
 The additional target network stabilises the learning process.
 
-# DQN
-The algorithm described above is called DQN. More information can be found in the papers from Deepmind.
-- [Playing Atari with Deep Reinforcement Learning](https://arxiv.org/abs/1312.5602)
-- [Human-level control through deep reinforcement learning](https://storage.googleapis.com/deepmind-media/dqn/DQNNaturePaper.pdf)
+# Deep Q-Learning (DQN)
+
+
 
 ### Problems
-The DQN takes a representation of the state as input and outputs all the state action values. But what happens if the action space is continous. This means instead of just picking a action also the intensity of it. How could a DQN solve this issue?
+The DQN takes a representation of the state as input and outputs all the state action values. But what happens if the action space is continous. This means instead of just picking a action to also choose the intensity of it. How could a DQN handles this case?
 One way would be to discretize the action space. But how fine granular do you want to discretize the space.
+
+Furthermore, DQN has problems with high dimensional action spaces. Imagine the robots Atlas from Boston Dynamic. It has 28 degrees of freedom. If we discretize the action for each degree into 10 possible ways we would have $$10^{28}$$ output neurons. Finding the maximum would be an optimization problem on it's own.
 
 Many of this problems come from the fact that we estimate the state action values and then use the maximum value as action. But why do we do this extra step. Can't we directly estimate the action instead of doing this extra step. It has shown that we actually can go directly to the actions. This will be discussed in detail in one of the next posts..
 
-Can it only handle low dimensional spaces?
 
-Thus, DQN is not very suitable for robotic applications where the actions are concrete and the action space is high dimensional.
-
-Imagine the robots Atlas from Boston Dynamic. It has 28 degrees of freedom. If we discretize the action for each degree into 10 possible ways we would have $$10^{28}$$ output neurons.
 
 ## Summary
-In this post we discussed how we can handle environments with a huge state space. We used Neural Networks to approximate Q(s,a). The described algorithm using a Neural Network with replay buffer and target network was firstly
-described by DeepMind.
+We discussed the problems of Q-Learning with a huge state space and discrete action space. Then we solved the problems by using function approximation instead of a tabular approach. We used a Neural Network for function approximation which lead us to the famous DQN algorithm.
+More information can be found in the papers from Deepmind.
+- [Playing Atari with Deep Reinforcement Learning](https://arxiv.org/abs/1312.5602)
+- [Human-level control through deep reinforcement learning](https://storage.googleapis.com/deepmind-media/dqn/DQNNaturePaper.pdf)
 
-They used it successfully train a DQN for multiple atari games and demonstrated the performance.
-More information can be found in their two famous papers.
+Nevertheless, we disovered that DQN has problems with continous and high dimensinoal action spaces. We will come up with a solution for this problem in one of the next posts. The solution we will look at will be policy gradient algorithm.
