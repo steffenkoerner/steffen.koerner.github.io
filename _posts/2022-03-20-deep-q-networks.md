@@ -1,41 +1,60 @@
 ---
 layout: post
 title:  "Deep Q-Networks (DQN)"
-date:   2022-03-06
+date:   2022-03-20
 categories: Deep Reinforcement Learning
 ---
 
 In the previous posts we looked at small environments like the grid world. In these environments it easy to
 create a table that contains an action for each state. But what happens if the state space is huge, like e.g. in the game Go. Then this tabular approach is not possible anymore.
 
-In this post we will look at some basic implementation 
+In this post we discuss how we can extend Q-Learning to huge state spaces by using function approximation. We will use a Neural Network for this. The reader is assumed to have a basic knowledge of it. Some short introduction can be found in [wikipedia: Artificial Neural Network](https://en.wikipedia.org/wiki/Artificial_neural_network).
 
 ## Function Approximation
-In the case of huge state spaces we need a different approach. One solution is to approximate the complex non-linear function Q(s,a).
+Assume we have a huge state space like in the board game of [Go](https://en.wikipedia.org/wiki/Go_(game)). On a game board with a size
+of 19 x 19 there are more than $$10^{170}$$ legal positions. It's not feasible to store this in a tabular form on a computer due to the shortage of memory. 
 
-There are multiple approaches to approximate this function. Some are described in the excellent book of Richard Sutton, which can be downloaded for for free: [Reinforcement Learning: An Introduction](http://incompleteideas.net/book/the-book.html).
+Besides the memory problem there is also a problem with filling the table. To add an entry the corresponding state has to be visited. That's often infeasible as well.
 
-In this post we will focus on using a Deep Neural Network as function approximation. 
+How can we solve these issues? The solution is to use function approximation for the complex non-linear function Q(s,a).
 
+This obviousy saves the memory issues, as we just need to store the function instead of the whole table.
 
-TODO: Add Image of neural network. input is a representation of the state and the output is the Q(s,a1), Q(s,a2), Q(s,a3) values
-The input representaiton can be a image then we can use a CNN or it actually can be some feature representation. Then we could use a plain Neural Network
+It also solves the visiting of each state. This means that we can even estimated Q(s,a) values for states that we haven't estimated so far. The main assumption is that states that are close to each other result in the same action. This means visiting a state s also enables estimates for all close states.
 
+There are multiple approaches to approximate this function. Some are described in the excellent book of Richard Sutton, which can be downloaded for free: [Reinforcement Learning: An Introduction](http://incompleteideas.net/book/the-book.html).
 
-How can we train this Neural Network?
+In the following we will focus on using a Deep Neural Network as function approximation. 
 
+#### Neural Network
+A neural network is just a collection of connected neurons (nodes). It consists of an input layer, multiple hidden layers and an output layer ( [wikipedia: Artificial Neural Network](https://en.wikipedia.org/wiki/Artificial_neural_network)).
 
-TODO: Describe the loss function that is minimised
+The input layer takes the representation of the state of the environment as input. This representation can be an image as in the case of the Atari games. But it could also be something like position, velocity, acceleration,..
+It's important that this representation contains all the relevant information about the environment as this is the data the agent uses for learning.
 
-Actually, we can use a classical supervised learning approach. Our target (label) can be retrieved from the
+The output contains a q-value for each action.
+
+An example network is shown in the figure below. It's just a sketch and thus actually the edges between nodes are not complete. The neural network takes three variables that encode the observation as input. Assuming that we have four discrete action it outputs 4 q-values corresponding to each possible action. We then execute the action witht the highest value.
+
+![Neural Network](/images/neural_network.png)
+
+#### How can we train this Neural Network?
+Actually, we can use a supervised learning approach. Our target (label) can be retrieved from the
 Bellman Equation we discussed in the [Temporal Difference Learning post]({% post_url 2022-02-26-temporal-difference-learning %}).
-
-The Bellman Equation:
 
 $$Q(s,a) = \mathbb{E}[ r(s,a) + \gamma \mathbb{E}[Q(s',a')]]$$
 
-Unfortunately, it's not possible to directly use the data that is coming from the environment. We will discuss why this is the case and how we can solve these problems.
+From this we derived our Q-Learning formula:
 
+$$Q(s,a) = Q(s,a) + \alpha * (r(s,a) + \gamma * \max_{a'}Q(s',a') - Q(s,a))$$
+
+, where $$r(s,a) + \gamma * \max_{a'}Q(s',a') - Q(s,a)$$ is the error $$\delta$$.
+
+We want to minimize the square of this error. This can be done by backpropagation. 
+
+Unfortunately, it's not possible to directly use the data when it is coming from the environment. This means when we collected the experience (s,a,r,s',a') we can't directly update the weights of the Neural Network.
+
+That's a problem and in the following we discuss why it is a problem and how to overcome it.
 
 ### Experience Replay
 Training a Neural Network uses stochastic gradient descent. This algorithm assumes that the training data is independent and identically distributed (i.i.d). Unfortunately, our training data doesn't fulfill this assumption.
