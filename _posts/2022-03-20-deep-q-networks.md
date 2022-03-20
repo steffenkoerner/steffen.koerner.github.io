@@ -26,7 +26,7 @@ There are multiple approaches to approximate this function. Some are described i
 
 In the following we will focus on using a Deep Neural Network as function approximation. 
 
-#### Neural Network
+### Neural Network
 A neural network is just a collection of connected neurons (nodes). It consists of an input layer, multiple hidden layers and an output layer ( [wikipedia: Artificial Neural Network](https://en.wikipedia.org/wiki/Artificial_neural_network)).
 
 The input layer takes the representation of the state of the environment as input. This representation can be an image, as in the case of the Atari games. But it could also be something like position, velocity, acceleration, …
@@ -38,7 +38,7 @@ An example network is shown in the figure below. It's just a sketch, and thus ac
 
 ![Neural Network](/images/neural_network.png)
 
-#### How can we train this Neural Network?
+### How can we train this Neural Network?
 Actually, we can use a supervised learning approach. Our target (label) can be retrieved from the
 Bellman Equation we discussed in [Temporal Difference Learning post]({% post_url 2022-02-26-temporal-difference-learning %}).
 
@@ -56,7 +56,7 @@ Unfortunately, it's not possible to directly use the data when it is coming from
 
 That's a problem, and in the following we discuss why it is a problem and how to overcome it.
 
-### Experience Replay
+## Experience Replay
 Training a Neural Network with backpropagation uses stochastic gradient descent. This algorithm assumes that the training data is independent and identically distributed (i.i.d). Unfortunately, our training data doesn't fulfill this assumption.
 
 It is not independent, as the data received is coming from an agent that is following a policy. In other words, the next state and the current state are coupled by the current policy temporarily. Thus, the agent can't learn directly from the experiences. 
@@ -69,7 +69,7 @@ The buffer in this context is called **replay buffer** as you replay experiences
 
 The process of sampling a subset from the replay buffer to learn from it is called **experience replay**.
 
-### Target Networks
+## Target Networks
 We used supervised learning for training. Unfortunately, the approach is not directly supervised learning, as the target depends on the network weights. The target is
 
  $$y_i = r_i(s,a) + \gamma \max_{a'}Q_{\phi}(s',a') $$
@@ -92,7 +92,7 @@ Thus, we need to update the formula to:
 The additional target network stabilizes the learning process.
 
 
-### Problems of DQN
+## Problems of DQN
 The algorithm we described above is called Deep Q-Learning (DQN).
 
 It takes a representation of the state as input and outputs all the state action values. But what happens if the action space is continuous. Imagine choosing the intensity of an action instead of only deciding which action to execute. How could a DQN handles this case?
