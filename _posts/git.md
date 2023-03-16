@@ -5,7 +5,8 @@ date:   2022-02-10 git
 categories: git
 ---
 
-Git bisect is a very convenient way to efficiently find the commit that introduced a bug. In this short tutorial I will show you how to use this feature. The corresponding code can be found here. If you want to directly experiment with the code you can directly jump to ???????
+# Git Bisect Tutorial
+Git bisect is a very convenient way to efficiently find the commit that introduced a bug. In this short tutorial I will show you how to use this feature. The corresponding code can be found here. If you want to directly experiment with the code you can directly jump to the [challenge] (https://github.com/steffenkoerner/git)
 
 There are two ways on how to use git bisect. The manual and the automatic one. We will discuess both in the following.
 
