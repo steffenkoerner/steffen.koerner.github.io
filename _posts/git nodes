@@ -1,1 +1,6 @@
 Explain git reflog
+
+How git force-with-lease checks if something changed
+Unfortunately, git fetch messes everything up
+
+git stash push -m "Message for stash"
