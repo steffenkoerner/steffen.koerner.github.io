@@ -78,9 +78,9 @@ We used supervised learning for training. Unfortunately, the approach is not dir
 
 
 
-That's because Q_{\phi}(s,a) and Q_{\phi}(s',a') depend on the same weights. Thus, updating the weights leads to changing the target as well as the estimation. This can lead to an unstable learning process.
+That's because $$Q_{\phi}(s,a)$$ and $$Q_{\phi}(s',a')$$ depend on the same weights. Thus, updating the weights leads to changing the target as well as the estimation. This can lead to an unstable learning process.
 
-The learning process can be made more stable by using a **target network**. The target network is a copy of the original network and is used to estimate Q_{\phi}(s',a'). The original network is updated during training. 
+The learning process can be made more stable by using a **target network**. The target network is a copy of the original network and is used to estimate $$Q_{\phi}(s',a')$$. The original network is updated during training. 
 After some episodes, the learned weights are copied to the target network.
 
 Thus, we need to update the formula to:
